@@ -10,4 +10,4 @@ In this paper, we provide a comprehensive empirical demonstration of the NFLT by
 
 From the point of a data science practitioner, our work does implicitly insinuate that in predictive analytics, the methods that emerge as often predictive among the best should be seriously considered even though we do not suggest ignoring or even neglecting the other techniques.
 
-*Keywords*: Data science, Statistical Learning, Prediction, Predictive Performance, No Free Lunch Theorem (NFLT), Learning Machine, Estimation, Dataset, Function space
+**Keywords**: Data science, Statistical Learning, Prediction, Predictive Performance, No Free Lunch Theorem (NFLT), Learning Machine, Estimation, Dataset, Function space
