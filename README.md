@@ -1,6 +1,6 @@
 # NFLT journal repository
 
-This repository contains the binary class, multi-class and regression datasets alongside with their R scripts to show empirically that the no free lunch theorem of statistical machine learning is indeed valid for every learning problem.
+This repository contains the binary class, multi-class, and regression datasets alongside the R scripts to show empirically that the no free lunch theorem of statistical machine learning is indeed valid for every learning problem.
 
 # Abstract
 
