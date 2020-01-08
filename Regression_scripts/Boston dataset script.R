@@ -190,7 +190,7 @@ mse <- as_tibble(mse)
 
 # Boxplot for the test errors of 15 regression models --------------
 
-AVTE_boston_dataset <- mse %>% pivot_longer(1:15, names_to = "Model", values_to = "AVTE") %>%  ggplot(., aes(reorder(x = Model, AVTE, FUN = median), y = AVTE, fill = Model)) + geom_boxplot(show.legend = F) + theme_bw() + labs(y = 'Test error', x = 'Learning methods', title = 'Prediction error (MSE) of each machine learning method', subtitle = 'over 100 hold out sub sample', caption = "Source: Boston housing price dataset") + theme(axis.title.x = element_text(face = 'bold', size = 12), axis.title.y = element_text(face = 'bold', size = 12), axis.text.x = element_text(angle = 50, vjust = 0.5, face = 'bold'))                                            
+AVTE_boston_dataset <- mse %>% pivot_longer(1:15, names_to = "Model", values_to = "AVTE") %>%  ggplot(., aes(reorder(x = Model, AVTE, FUN = mean), y = AVTE, fill = Model)) + geom_boxplot(show.legend = F) + theme_bw() + labs(y = 'Test errors', x = 'Learning methods') + theme(axis.title.x = element_text(face = 'bold', size = 12), axis.title.y = element_text(face = 'bold', size = 12), axis.text.x = element_text(angle = 50, vjust = 0.5, face = 'bold'))                                            
 
 # Save figure
 
@@ -201,26 +201,9 @@ ggsave("Regression_figures_test_errors/AVTE_boston_dataset.png", width = 6.74, h
 
 avg.mse <- apply(mse, 2, mean)
 
-data.frame(SN=1:15, AVTE=avg.mse) %>%
-  rownames_to_column(., var="Model") %>% ggplot(., aes(x=SN , y=AVTE))+geom_point()+
-  ggrepel::geom_label_repel(aes(label=Model))+theme_bw()+
-  labs(y="Average test error", x="Learning methods", 
-       title = "Average prediction error (MSE) of each machine learning method", 
-       subtitle = 'over 100 hold out sub sample',
-       caption = "Source: Boston housing price dataset")+
-  theme(axis.title.x = element_text(face = "bold",
-       size = 12),axis.title.y = element_text(face = "bold",size = 12), axis.text.x = element_blank(), axis.ticks.x = element_blank())->AVPE_boston_dataset
-
-
-ggsave("Regression scripts/Images of average test errors/AVPE_boston_dataset.png", width = 6.74, height = 4.54)
-
-
-
-AVPE_boston_dataset <- enframe(avg.mse, name = "Model", value = "AVTE") %>% ggplot(., aes(x = 1:15, y = AVTE)) +
+AVPE_boston_dataset <- enframe(avg.mse, name = "Model", value = "AVTE") %>% ggplot(., aes(x = reorder(1:15, AVTE, mean), y = AVTE)) +
   geom_point() + ggrepel::geom_label_repel(aes(label = Model)) + theme_bw() +
-  labs(y = "Average test error", x = "Learning methods",
-       title = "Average prediction error (MSE) of each machine learning method", subtitle = 'over 100 hold out sub sample',
-       caption = "Source: Boston housing price dataset") +
+  labs(y = "Average test error", x = "Learning methods") +
   theme(axis.title.x = element_text(face = "bold", size = 12),
         axis.title.y = element_text(face = "bold", size = 12),
         axis.text.x = element_blank(),

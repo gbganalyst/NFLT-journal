@@ -207,7 +207,8 @@ err <- as_tibble(err)
 
 # Boxplot for test errors of 15 classifiers --------------
 
-AVTE_contraceptive_dataset <- err %>% pivot_longer(1:15, names_to = "Model", values_to = "AVTE") %>% ggplot(.,aes(x=Model, y=AVTE, fill=Model))+geom_boxplot(show.legend = F)+theme_bw()+labs(y='Test error', x='Method (Classifier)', title = 'Misclassification error of each classifier', subtitle = 'over 100 hold out sub sample', caption = "Source: Indonesia contraceptive method choice dataset")+theme(axis.title.x = element_text(face = 'bold',size = 12),axis.title.y = element_text(face = 'bold',size = 12),axis.text.x = element_text(angle = 50, vjust = 0.5, face = "bold"))                                      
+AVTE_contraceptive_dataset <- err %>% pivot_longer(1:15, names_to = "Model", values_to = "AVTE") %>% ggplot(.,aes(x= reorder(Model, AVTE, FUN = mean), y=AVTE, fill=Model)) +geom_boxplot(show.legend = F)+theme_bw()+labs(y='Test errors', x='Learning methods (Classifiers)')+theme(axis.title.x = element_text(face = 'bold',size = 12),axis.title.y = element_text(face = 'bold',size = 12),axis.text.x = element_text(angle = 50, vjust = 0.5, face = "bold"))
+                       
 # Save figure
 
 ggsave("Classification_figures_test_errors/Multi_class/AVTE_contraceptive_dataset.png", width = 6.74, height = 4.54)
@@ -216,14 +217,14 @@ ggsave("Classification_figures_test_errors/Multi_class/AVTE_contraceptive_datase
 
 avg.err <- apply(err, 2, mean)
 
-AVPE_contraceptive_dataset <- enframe(avg.err, name = "Model", value = "AVTE") %>% ggplot(., aes(x = 1:15, y = AVTE)) + geom_point() +
-  ggrepel::geom_label_repel(aes(label = Model)) + theme_bw() + labs(y = "Average test error", x = "Method (Classifier)", title = "Average misclassification error of each classifier", subtitle = "over 100 hold out sub sample", caption = "Source: Indonesia contraceptive method choice dataset") + theme(
+AVPE_contraceptive_dataset <- enframe(avg.err, name = "Model", value = "AVTE") %>% ggplot(., aes(x = reorder(1:15, AVTE, fun =mean), y = AVTE)) + geom_point() +
+  ggrepel::geom_label_repel(aes(label = Model)) + theme_bw() + labs(y = "Average test error", x = "Learning methods (Classifiers)") + theme(
     axis.title.x = element_text(face = "bold", size = 12), axis.title.y = element_text(face = "bold", size = 12),
     axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
 # Save figure
 
-ggsave("Classification_figures_test_errors/Multi_class/AVPE_contraceptive_dataset.png", width = 6.74, height = 4.54)
+ggsave("Classification_figures_test_errors/Multi_class/AVPE_contraceptive_dataset.png")
 
 # mean, median, and standard deviation test error of classifiers-----------
 
